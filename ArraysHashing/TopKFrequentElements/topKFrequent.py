@@ -1,30 +1,23 @@
 import collections
-import heapq
 import unittest
 
 class Solution:
-    def topKFrequent(self, nums: list[int], k: int) -> list[int]:
-        # Approach 1: Using collections.Counter and sorting (simpler for Python)
-        # frequency_map = collections.Counter(nums)
-        # sorted_items = sorted(frequency_map.items(), key=lambda item: item[1], reverse=True)
-        # result = [item[0] for item in sorted_items[:k]]
-        # return result
+    def topKFrequent(self, nums: list[int], k: int) -> list[int]: # type: ignore
+        count = {}
+        freq = [[] for i in range(len(nums) + 1)]
 
-        # Approach 2: Using a min-heap (more generalizable to other languages)
-        # frequency_map = collections.Counter(nums)
-        # min_heap = [] # Stores (frequency, number)
-
-        # for num, freq in frequency_map.items():
-        #     heapq.heappush(min_heap, (freq, num))
-        #     if len(min_heap) > k:
-        #         heapq.heappop(min_heap)
+        for num in nums:
+            count[num] = 1 + count.get(num, 0)
         
-        # result = [item[1] for item in min_heap]
-        # return result
+        for num, numCount in count.items():
+            freq[numCount].append(num)
 
-        
-
-        return []
+        result = []
+        for i in range(len(freq)-1, 0, -1):
+            for n in freq[i]:
+                result.append(n)
+                if len(result) == k:
+                    return result
 
 class TestTopKFrequent(unittest.TestCase):
     def test_example_1(self):
