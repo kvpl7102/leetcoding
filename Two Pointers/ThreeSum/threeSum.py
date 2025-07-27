@@ -5,12 +5,14 @@ class Solution:
         nums.sort()
         result = []
         n = len(nums)
-
+        
         for i in range(n - 2):
-            if i > 0 and nums[i] == nums[i-1]:
+            if i > 0 and nums[i] == nums[i-1]: 
                 continue
+            
+            left = i + 1
+            right = n - 1
 
-            left, right = i + 1, n - 1
             while left < right:
                 current_sum = nums[i] + nums[left] + nums[right]
                 if current_sum == 0:
@@ -25,14 +27,15 @@ class Solution:
                     left += 1
                 else:
                     right -= 1
+        
         return result
+    
 
 class TestThreeSum(unittest.TestCase):
     def test_example_1(self):
         nums = [-1,0,1,2,-1,-4]
         expected = [[-1,-1,2],[-1,0,1]]
         result = Solution().threeSum(nums)
-        # Sort inner lists and outer list for consistent comparison
         result.sort()
         for triplet in result:
             triplet.sort()
